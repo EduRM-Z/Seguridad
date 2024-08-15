@@ -12,11 +12,14 @@ Este es un simple programa keylogger escrito en C. Registra todas las pulsacione
 
 ## Instalación
 
-1. Clona el repositorio
+1. Instala Scrot
 
-2. Navega hasta el directorio del proyecto
+2. Clona el repositorio
 
-3. Compila el programa:
+3. Navega hasta el directorio del proyecto
+
+4.  Compila el programa `gcc nombre_del_archivo.c -o nombre_del_ejecutable`
+
 
 ## Uso
 
