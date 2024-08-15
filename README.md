@@ -33,7 +33,7 @@ La ruta del archivo de registro está definida por la macro `LOGFILEPATH` en el 
 
 No olvides crear la carpeta donde se van a guardar las capturas, cambia la ruta también `scrot /home/seguridad/screenshots/%s.png`
 
-Instala scrot con el siguiente comando: sudo apt-get install scrot
+Instala scrot con el siguiente comando: `sudo apt-get install scrot`
 
 
 ## Supuestos
