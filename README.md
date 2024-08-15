@@ -31,7 +31,7 @@ El programa comenzará a registrar las pulsaciones de teclas. Para detener el pr
 
 La ruta del archivo de registro está definida por la macro `LOGFILEPATH` en el código fuente. Por defecto, está configurada en `/home/seguridad/keylogger.txt`. Puedes cambiar esta ruta a cualquier ubicación válida en tu sistema.
 
-No olvides crear la carpeta donde se van a guardar las capturas, cambia la ruta también "scrot /home/seguridad/screenshots/%s.png"
+No olvides crear la carpeta donde se van a guardar las capturas, cambia la ruta también 'scrot /home/seguridad/screenshots/%s.png'
 
 Instala scrot con el siguiente comando: sudo apt-get install scrot
 
